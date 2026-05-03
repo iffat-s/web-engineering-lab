@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="rollNumber">Roll Number:</label>
+        <input type="text" id="rollNumber" name="rollNumber"><br><br>
+
+         <label for="section">Section:</label>
+        <input type="text" id="section" name="section"><br><br>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob"><br><br>
+
+        <button type="submit" value="Submit" onclick="calculateAge()">
+    </form>
+    <div id="output">
+
+    </div>
+</body>
+<script>
+    function calculateAge()
+    {
+        event.preventDefault()
+        let dob=document.getElementById("dob").value;
+        let today=new Date();
+        let birthdate=new Date(dob);
+        let age=today.getFullYear()-birthdate.getFullYear();
+        let month=today.getMonth()-birthdate.getMonth();
+        if(month<0 || (month===0 && today.getDate()<birthdate.getDate()))
+        {
+            age--;
+        } 
+        console.log(age);
+      
+            let output=document.getElementById("output");
+        output.style.display="block";
+        const table=document.createElement("table");
+        let name=document.getElementById("name").value;
+        let rollNumber=document.getElementById("rollNumber").value;
+        let section=document.getElementById("section").value;
+
+        output.innerHTML
+        =`
+                    <h2>${name}</h2>
+                    <div class="profile-info">
+                        <p><strong>Roll No:</strong> ${rollNumber}</p>
+                        <p><strong>Section:</strong> ${section}</p>
+                        <p><strong>DOB:</strong> ${dob}</p>
+                        <p><strong>Age:</strong> ${age} years old</p>
+                    </div>
+               
+            `;
+
+  }
+
+</script>
+</html>

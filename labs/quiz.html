@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="myform">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="marks">Marks:</label>
+        <input type="text" id="marks" name="marks"><br><br>
+        <label for="date">Date of Birth</label>
+        <input type="date" id="date" name="date"><br><br>
+        <button type="submit" >Generate Card</button>
+    </form>
+    <div id="card"></div>
+ 
+    <script>
+        form=document.getElementById("myform");
+        form.addEventListener("submit",function(event)
+        {
+            event.preventDefault();
+            const name=document.getElementById("name").value;
+            const mark=document.getElementById("marks").value;
+            const date=document.getElementById("date").value;
+            const dob=new Date(date);
+            const age=new Date().getFullYear()-dob.getFullYear();
+
+
+            const marks=parseInt(mark);
+            const Student=
+            {
+                sname:name,
+                smarks:marks,
+                sage:age
+            };
+            const {sname,smarks,sage}=Student;
+            const finalMarks=(marks) => marks+5;
+            const fmarks=finalMarks(smarks);
+            function show()
+            {
+                let output=document.getElementById("card");
+                output.style.display="block";
+                output.style.border="1px solid black";
+                output.style.padding="10px";
+                output.style.width="200px";
+                output.style.textAlign="center";
+                
+
+                output.innerHTML=`
+                    <h2>${name}</h2>
+                    
+                        <p><strong>Name</strong> ${sname}</p>
+                        <p><strong>Original Marks:</strong> ${smarks}</p>
+                        <p><strong>Final Marks:</strong> ${fmarks}</p>
+                        <p><strong>Age:</strong> ${sage}</p>`
+            }
+            show();
+         });
+    </script>
+</body>
+</html>

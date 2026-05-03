@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2 id="output"></h2>
+    <form id="my">
+        <input type="text" id="input">
+        <button type="submit">Submit</button>
+    </form>
+    <!-- <script>
+        const uname=prompt("Enter your name:");
+        document.getElementById("output").innerText="Hello "+uname;
+        
+    </script>
+    -->
+    <script>
+        
+        const form=document.getElementById("my");
+        form.addEventListener("submit",function(event)
+        {
+            event.preventDefault();
+            const name=document.getElementById("input").value;
+            document.getElementById("output")=name;
+
+
+        });
+
+    </script>
+
+    
+</body>
+</html>

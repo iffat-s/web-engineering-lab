@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mini Shop Invoice</title>
+<style>
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    padding: 30px;
+    background: linear-gradient(to right, #e3f2fd, #f5f7fa);
+}
+
+h2 {
+    text-align: center;
+    color: #1a237e;
+}
+
+form {
+    background: #ffffff;
+    padding: 20px;
+    width: 320px;
+    margin: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #316af1;
+    outline: none;
+    box-shadow: 0 0 5px rgba(49,106,241,0.3);
+}
+
+button {
+   
+    padding: 10px;
+    background: #316af1;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    align-self: center;
+}
+
+button:hover {
+    background: #1a4ed8;
+}
+
+table {
+    margin-top: 25px;
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background: #316af1;
+    color: white;
+    font-weight: 600;
+}
+
+td {
+    border-bottom: 1px solid #eee;
+}
+
+tr:hover {
+    background-color: #f1f5ff;
+}
+
+.summary {
+    margin-top: 25px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    font-size: 16px;
+}
+
+.summary h3 {
+    color: #1a237e;
+}
+</style>
+</head>
+<body>
+
+<h2>Invoice Generator</h2>
+
+<form id="form">
+<label>Name:</label>
+<input type="text" id="name"><br><br>
+
+<label>Price:</label>
+<input type="number" id="price"><br><br>
+
+<label>Quantity:</label>
+<input type="number" id="quantity"><br><br>
+
+<label>Category:</label>
+<input type="text" id="category"><br><br>
+
+<button type="submit">Add Product</button>
+<button onclick="generateInvoice()">Generate Invoice</button>
+</form>
+
+
+
+
+<div id="output"></div>
+
+<script>
+
+let products = [];  
+
+document.getElementById("form").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const price = parseFloat(document.getElementById("price").value);
+    const quantity = parseInt(document.getElementById("quantity").value);
+    const category = document.getElementById("category").value;
+
+    const newProduct = {name, price, quantity, category};
+
+    products = products.concat(newProduct);
+
+    this.reset();
+});
+
+function generateInvoice(){
+
+
+const mapped = products.map(p => ({
+    name: p.name,
+    price: p.price,
+    quantity: p.quantity,
+    category: p.category,
+    total: p.price * p.quantity
+}));
+
+
+const specialItems = products.filter(p => 
+    p.category === "rice" || p.price === 500
+);
+
+
+const subtotal = mapped.reduce((acc, p) => acc + p.total, 0);
+
+const discount = subtotal > 5000 ? subtotal * 0.1 : 0;
+const finalAmount = subtotal - discount;
+
+let rows = "";
+
+mapped.forEach(p => {
+    rows += `
+    <tr>
+        <td>${p.name}</td>
+        <td>Rs ${p.price}</td>
+        <td>${p.quantity}</td>
+        <td>${p.category}</td>
+        <td>Rs ${p.total}</td>
+    </tr>
+    `;
+});
+let specialRows = "";
+
+specialItems.forEach(p => {
+    specialRows += `
+    <tr>
+        <td>${p.name}</td>
+        <td>Rs ${p.price}</td>
+        <td>${p.quantity}</td>
+        <td>${p.category}</td>
+    </tr>
+    `;
+});
+
+document.getElementById("output").innerHTML = `
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Category</th>
+            <th>Total</th>
+        </tr>
+        ${rows}
+    </table>
+
+    <div class="summary">
+        <p>Subtotal: Rs ${subtotal}</p>
+        <p>Discount: Rs ${discount}</p>
+        <h3>Final Payable: Rs ${finalAmount}</h3>
+    </div>
+
+    <h3>Filtered / Special Items</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Category</th>
+        </tr>
+        ${specialRows}
+    </table>
+`;
+
+}
+</script>
+
+</body>
+</html>

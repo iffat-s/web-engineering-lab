@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="heading">
+
+    </div>
+
+    <div id="p">
+
+    </div>
+    <div id="list">
+
+    </div>
+    
+</body>
+<script>
+    const heading=document.getElementById("heading")
+    heading.innerHTML="<h1>Hello World</h1>";
+    heading.style.color="blue";
+    heading.style.textAlign="center";
+    heading.style.border="2px solid black";
+    heading.style.padding="10px";
+    const p=document.getElementById("p"); 
+  p.innerHTML="<p>This is a paragraph.</p>";
+    p.style.fontSize="18px";
+    p.style.color="green";
+    p.style.textAlign="center";
+    p.style.border="1px solid black";
+    const fruits=["Apple","Banana","Orange"];
+    const list=document.getElementById("list");
+    fruits.forEach(fruit=>{
+        const li=document.createElement("li");
+        li.textContent=fruit;
+        list.appendChild(li);
+    });
+    list.style.listStyleType="square";
+    list.style.paddingLeft="20px";
+    list.style.border="1px solid black";
+
+//     const add=(a,b) =>a+b;
+// console.log(add(5,10));
+//     const greet=(name="Student")=>`welcome ${name}`;
+//     console.log(greet());
+
+// const numbers=[1,2,3,4];
+// const doubled =numbers.map(n=>n*2);
+// console.log(doubled);
+
+</script>
+</html>

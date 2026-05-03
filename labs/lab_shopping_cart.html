@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price"><br><br>
+        
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity"><br><br>
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category"><br><br>
+        <input type="submit" value="Add to Cart">
+    </form>
+    <div id="product1">
+
+    </div>
+    <div id="pro">  </div>
+
+
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            // Get the values from the form inputs
+            const name = document.getElementById('name').value;
+            const price = parseFloat(document.getElementById('price').value);
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const category = document.getElementById('category').value;
+
+            
+
+            const products=[ {name:name, price:price, quantity:quantity, category:category},
+                {name:"Sugar", price:1000, quantity:2, category:"grocery"},
+                {name:"Rice", price:500, quantity:5, category:"rice"},
+                {name:"Wheat", price:800, quantity:3, category:"grocery"},
+                {name:"Oil", price:1200, quantity:1, category:"grocery"}
+                
+
+            ];
+
+            const productinfo=products.map(product =>product.name + " " + product.price + " " + product.quantity + " " + product.category);
+            const productC=products.filter(p=> p.price==1000 || p.category=="rice");
+            const prices=products.map(p=>p.price);
+            const total=prices.reduce((acc,price)=>acc+price,0);
+            console.log(total);
+
+             document.getElementById("product1").innerHTML=productinfo;
+             document.getElementById("pro").innerText=productC;
+
+             
+            console.log(productC)
+            console.log(productinfo);
+
+
+
+         });
+    </script>
+    
+</body>
+</html>
